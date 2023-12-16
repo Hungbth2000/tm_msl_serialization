@@ -9,12 +9,12 @@
 6. [Changed Files](#changed-files)
 
 ## Introduction
-In this project, serialization and deserialization methods for Predictor class were implemented.
+In this project, serialization and de-serialization methods for Predictor class are implemented.
 
-- Serialization method:<br/>
+- Serialize method:<br/>
   	Serialize all the objects in Predictor class (Connections, CortexLayer, HtmClassifier), and save them to an output text file.
-- Deserialization method:<br/> 
-  	This method takes the previous serialized text file as an input, and recreate an instance of Predictor class with the previous data. All the objects in the new Predictor instance are created with previous data.
+- Deserialize method:<br/> 
+  	This method takes the previous serialized text file as an input, and recreates an instance of Predictor class with the previous data. All the objects in the new Predictor instance are created with previous data.
 
 The predictor which is the result of MultiSequenceLearning is serialized and deserialized using the implemented methods for serialization within Predictor class. To verify the implementation of the project, both the normal predictor and the serialized predictor were used to make prediction. The prediction results of both predictors are checked, and compared,  which were found to be identical.
 
@@ -38,7 +38,7 @@ Path to the Project: [MySeProject](https://github.com/Hungbth2000/tm_msl_seriali
 
 ### Serialize method for CortexLayer:
 - First of all, it is necessary to implement serialize method for the CortexLayer which is an object within Predictor class, the CortexLayer in predictor has three HtmModules( ScalarEncoder, SpatialPoolerMT, TemporalMemory).
-<br\>The method below shows how to serialize the cortexlayer:
+<br/>The method below shows how the CortexLayer is serialized:
 ```csharp
     public void Serialize(object obj, string name, StreamWriter sw)
     {
@@ -68,7 +68,7 @@ Path to the Project: [MySeProject](https://github.com/Hungbth2000/tm_msl_seriali
 ```
 
 ### Serialize method for Predictor class:
-- In order to serialize the result of MultiSequences Learning, we must be able to serialize instance of class Predictor.
+- In order to serialize the result of MultiSequencesLearning, we must implement method to serialize instance of Predictor class.
 - The Predictor class inherits the interface ISerializable which defines methods for serialization.
 ```csharp
     public interface ISerializable
@@ -77,7 +77,7 @@ Path to the Project: [MySeProject](https://github.com/Hungbth2000/tm_msl_seriali
         static object Deserialize<T>(StreamReader sr, string name) => throw new NotImplementedException();
     }
 ``` 
-- Inside the Predictor we have three objects that are needed to be serialized. They are connections, layer, and HtmClassifier. The code below shows the objects in the predictor:
+- Inside the Predictor we have three objects of class Connections, CortexLayer, HtmClassifier that are needed to be serialized. The code below shows the objects in the predictor:
 ```
     public class Predictor : ISerializable
     {
@@ -87,8 +87,7 @@ Path to the Project: [MySeProject](https://github.com/Hungbth2000/tm_msl_seriali
 
         private HtmClassifier<string, ComputeCycle> classifier { get; set; }
 ```
-- The Predictor.Serialize() method will serialize all the objects in the predictor. It will call the Connections.Serialize(), layer.Serialize(), and classifier.Serialize() methods to serialize the connections, cortex layer, and classifier in the Predictor instance respectively.
-
+- The Predictor.Serialize() method will serialize all the objects in the predictor. It will call the Connections.Serialize(), CortexLayer.Serialize(), and HtmClassifier.Serialize() methods to serialize these objects respectively.
 ```csharp
     public void Serialize(object obj, string name, StreamWriter sw)
     {
@@ -126,7 +125,7 @@ Path to the Project: [MySeProject](https://github.com/Hungbth2000/tm_msl_seriali
 
 ### De-serialize method for Predictor class: 
 - Up to this point, the predictor instance which is the result of MultiSequenceLearning, was able to be serialized to an output text file. 
-- Now the goal is to implement Deserialize() method for the Predictor class that can be used to recreate a Predictor instance from the serialized text file. All the objects in the recreated predictor must have the previous data. The code below shows the implemented Deserialize() within the Predictor class.
+- Now the goal is to implement Deserialize() method for the Predictor class that can be used to recreate a Predictor instance from the serialized text file. All the objects in the recreated Predictor instance must have the previous data. The code below shows the implemented Deserialize() method within the Predictor class.
 ```csharp
     public static object Deserialize<T>(StreamReader sr, string name)
         {
@@ -237,7 +236,7 @@ Path to the Project: [MySeProject](https://github.com/Hungbth2000/tm_msl_seriali
     //The Run() method will return not only the normal predictor, but also the serializedPredictor.
     var predictor = experiment.Run(sequences, out serializedPredictor, "predictor");
 ```
-- The Run() method also returns the MultiSequenceLearning.RunExperiment() method which finally returns the instance of Predictor.
+- The Run() method returns the MultiSequenceLearning.RunExperiment() method which finally returns the instances of Predictor class.
 - For verifying the implementation of serialization methods, the RunExperiment method will return two instances of class Predictor i.e., "predictor" and "serializedPredictor". The "predictor" instance is the normal predictor which is the normal result of the learning. While, "serializedPredictor" is the instance of class Predictor which is the result after serialization and deserialization of "predictor".
 ```csharp
     public Predictor Run(Dictionary<string, List<double>> sequences, out Predictor serializedPredictor, string fileName)
@@ -303,7 +302,7 @@ Path to the Project: [MySeProject](https://github.com/Hungbth2000/tm_msl_seriali
     }
 ```
 - Now, we compare the prediction output from "predictor" and "serializedPredictor" instance and the result must be same to verify that serialization and deserialization for instance of Predictor class were correct. 
-- As described below in the code, the "predictor" and "serializedPredictor were used as inputs for PredictNextElement() method to predict the next elements respectively. Here, the next elements for list2({ 2.0, 3.0, 4.0 }) were predicted and the results from both the normal predictor and the serialized predictor were same.
+- As described below in the code, the "predictor" and "serializedPredictor were used as inputs for PredictNextElement() method to predict the next elements respectively. Here, the next elements for list2({ 2.0, 3.0, 4.0 }) were predicted and the results from both the normal predictor and the serialized predictor were checked and compared. See the [Testing Output](#testing-output) below.
 ```csharp
     //The PredictNextElement() method will predict the next element using the normal predictor and the serialized predictor.
     //The prediction of both normal predictor and serialized predictor are checked, and compared. 
@@ -319,7 +318,7 @@ Path to the Project: [MySeProject](https://github.com/Hungbth2000/tm_msl_seriali
 ```
 
 ### Testing Output
-- Below shows the predicted output, which we got by using the normal predictor and the serialized predictor respectively. As shown below, the same prediction was made by both the normal predictor and the serialized predictor with the same accuracy (5, 4, 2).
+- Below shows the predicted output, which we got by using the normal predictor and the serialized predictor respectively. As shown below, the same prediction (5, 4, 2) was made by both the normal predictor and the serialized predictor with the same accuracy.
 ```
 Hello NeocortexApi! Experiment MultiSequenceLearning
 
