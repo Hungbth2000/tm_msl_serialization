@@ -1,5 +1,13 @@
 # ML22/23-10 Implement Serialization of Temporal Memory Learning Example
 
+## Table of contents
+1. [Introduction](#introduction)
+2. [Important Links](#important-links)
+3. [Getting Started](#getting-started)
+4. [Implementation](#implementation-of-serialization-and-deserialization-methods)
+5. [Experiment](#experiment)
+6. [Changed Files](#changed-files)
+
 ## Introduction
 In this project, serialization and deserialization methods for Predictor class were implemented.
 
@@ -17,6 +25,14 @@ The predictor which is the result of MultiSequenceLearning is serialized and des
 4. Implemented Serialize method in CortexLayer class: [CortextLayer.Serialize()](https://github.com/Hungbth2000/tm_msl_serialization/blob/d0453cc22f39ff6af8d0631773823c5541f67204/source/NeoCortexApi/Network/CortexLayer.cs#L166)<br/>
 5. Project Experiment: [Program.cs](https://github.com/Hungbth2000/tm_msl_serialization/blob/master/source/MySeProject/Program.cs)
 , [MultisequenceLearning.cs](https://github.com/Hungbth2000/tm_msl_serialization/blob/master/source/MySeProject/MultisequenceLearning.cs)
+
+## Getting Started
+Go to the source folder, and from there run the command below through the command line. You should be able to see the output of the experiment.
+
+```bash
+    dotnet run --project "../source/MySeProject/MySeProject.csproj"
+```
+Path to the Project: [MySeProject](https://github.com/Hungbth2000/tm_msl_serialization/blob/master/source/MySeProject/Program.cs)
 
 ## Implementation of Serialization and Deserialization methods
 
@@ -46,8 +62,8 @@ The predictor which is the result of MultiSequenceLearning is serialized and des
                 {
                     throw new NotImplementedException();
                 }
-            }
-        }
+             }
+         }
     }
 ```
 
@@ -201,7 +217,9 @@ The predictor which is the result of MultiSequenceLearning is serialized and des
     }
 ```
 
-## Experiment to verify implementation of Serialization and Deserialization methods in Predictor class
+## Experiment
+
+### Input for learning 
 - S1 and S2 are the input sequences for MultiSequenceLearning. 
 ```csharp
     private static void RunMultiSequenceSerializationExperiment()
@@ -243,6 +261,8 @@ The predictor which is the result of MultiSequenceLearning is serialized and des
         return predictor;
     }
 ```
+
+### Input for testing 
 - After learning these two sequences, several sequences are defined to check how the prediction works. 
 ```csharp
     // These list are used to make prediction
@@ -297,7 +317,9 @@ The predictor which is the result of MultiSequenceLearning is serialized and des
     //Prediction with serialized predictor
     PredictNextElement(serializedPredictor, list2);
 ```
-- Below shows the predicted output which we got by using the normal predictor and the serialized predictor respectively. As shown below, the same prediction was made by both the normal predictor and the serialized predictor with the same accuracy (5, 4, 2).
+
+### Testing Output
+- Below shows the predicted output, which we got by using the normal predictor and the serialized predictor respectively. As shown below, the same prediction was made by both the normal predictor and the serialized predictor with the same accuracy (5, 4, 2).
 ```
 Hello NeocortexApi! Experiment MultiSequenceLearning
 
@@ -353,5 +375,14 @@ C:\SE\source\MySeProject\bin\Debug\net6.0\MySeProject.exe (process 9356) exited 
 To automatically close the console when debugging stops, enable Tools->Options->Debugging->Automatically close the console when debugging stops.
 Press any key to close this window . . .
 ```
-
+## Changed Files
+1. [Predictor.cs](https://github.com/Hungbth2000/tm_msl_serialization/blob/master/source/NeoCortexApi/Predictor.cs)<br/>
+2. [CortexLayer.cs](https://github.com/Hungbth2000/tm_msl_serialization/blob/master/source/NeoCortexApi/Network/CortexLayer.cs)<br/>
+3. [HtmClassifier.cs](https://github.com/Hungbth2000/tm_msl_serialization/blob/master/source/NeoCortexApi/Classifiers/HtmClassifier.cs)<br/>
+4. [EncoderBase.cs](https://github.com/Hungbth2000/tm_msl_serialization/blob/master/source/NeoCortexApi/Encoders/EncoderBase.cs)<br/>
+5. [ScalarEncoder.cs](https://github.com/Hungbth2000/tm_msl_serialization/blob/master/source/NeoCortexApi/Encoders/ScalarEncoder.cs)<br/>
+6. [SpatialPooler.cs](https://github.com/Hungbth2000/tm_msl_serialization/blob/master/source/NeoCortexApi/SpatialPooler.cs)<br/>
+7. [TemporalMemory.cs](https://github.com/Hungbth2000/tm_msl_serialization/blob/master/source/NeoCortexApi/TemporalMemory.cs)<br/>
+8. [Connections.cs](https://github.com/Hungbth2000/tm_msl_serialization/blob/master/source/NeoCortexEntities/Entities/Connections.cs)<br/>
+9. [HtmSerializer.cs](https://github.com/Hungbth2000/tm_msl_serialization/blob/master/source/NeoCortexEntities/HtmSerializer.cs)<br/>
 
