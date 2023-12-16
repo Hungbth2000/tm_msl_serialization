@@ -126,7 +126,6 @@ namespace NeoCortexApi
 
                     sr.DiscardBufferedData();
                     sr.BaseStream.Seek(0, SeekOrigin.Begin);
-
                 }
 
                 // Deserialize the ScalarEncoder             
