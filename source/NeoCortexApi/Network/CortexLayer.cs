@@ -176,7 +176,6 @@ namespace NeoCortexApi.Network
                     string ObjType = serializableModule.GetType().Name;
                     if (serializableModule != null)
                     {
-
                         ser.SerializeBegin(ObjType, sw);
 
                         serializableModule.Serialize(serializableModule, null, sw);
