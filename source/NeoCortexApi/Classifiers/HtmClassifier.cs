@@ -777,10 +777,8 @@ namespace NeoCortexApi.Classifiers
                 // If the line contains a key-value pair, deserialize it
                 if (data.Contains(HtmSerializer.KeyValueDelimiter))
                 {
-
                     var kvp = ser.ReadDictSIarrayList<TIN>(cls.m_AllInputs, data);
                     cls.m_AllInputs = kvp;
-
                 }
                 // Otherwise, parse the parameters in the line and set them in the HtmClassifier
                 else
@@ -788,14 +786,12 @@ namespace NeoCortexApi.Classifiers
                     // Split the line into its parameters
                     string[] str = data.Split(HtmSerializer.ParameterDelimiter);
 
-
                     // Skip lines with no parameters
                     foreach (string value in str)
                     {
                         String.IsNullOrWhiteSpace(value);
                         continue;
                     }
-
 
                     // If the first parameter is an integer, set it as the maxRecordedElements property
                     if (int.TryParse(str[0], out int maxRecordedElements))

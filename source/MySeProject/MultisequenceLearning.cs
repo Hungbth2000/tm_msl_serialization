@@ -18,9 +18,10 @@ namespace NeoCortexApiSample
     public class MultiSequenceLearning
     {
         /// <summary>
-        /// Runs the learning of sequences. Here, Run() method returns the object of predictor.
+        /// Runs the learning of sequences, and returns an instance of class Predictor.
+        /// The serializedPredictor which is the result after serialization and deserialization of the normal predictor, will also be returned.  
         /// </summary>
-        /// <param name="sequences">Dictionary of sequences. KEY is the sewuence name, the VALUE is th elist of element of the sequence.</param>
+        /// <param name="sequences">Dictionary of sequences. KEY is the sequence name, the VALUE is th elist of element of the sequence.</param>
         public Predictor Run(Dictionary<string, List<double>> sequences, out Predictor serializedPredictor, string fileName)
         {
             Console.WriteLine($"Hello NeocortexApi! Experiment {nameof(MultiSequenceLearning)}");
@@ -112,7 +113,6 @@ namespace NeoCortexApiSample
                 // Clear active and predictive cells.
                 //tm.Reset(mem);
             }, numOfCyclesToWaitOnChange: 50);
-
 
             SpatialPoolerMT sp = new SpatialPoolerMT(hpc);
             sp.Init(mem);
@@ -309,15 +309,16 @@ namespace NeoCortexApiSample
 
             Debug.WriteLine("------------ END ------------");
 
-            // The "predictor" is the instance of class Predictor which is result after learning. This "predictor" object later on put in the argument of Save() method for serialization.
-            // The "serializedPredictor" is the instance of Predictor class which is the result after serialization and deserialization of Predictor. 
+            // The predictor is the result of MultiSequencelearning. 
             var predictor = new Predictor(layer1, mem, cls);
             
-            //Save() method is callled from Predictor Class, which serialize the instance of Predictor Class.
+            //Save() method is used to serialize the normal predictor locally to a file.  
             Predictor.Save(predictor, fileName);
 
-            //Load() method is callled from Predictor Class, which deserialize the instance of Predictor Class.
+            //Load() method is then used to deserialize an instance of class Predictor from the file.
+            //The serializedPredictor is the result after serialization and deserialization of the normal predictor.
             serializedPredictor = Predictor.Load<Predictor>(fileName);
+
             return predictor;
         }
 

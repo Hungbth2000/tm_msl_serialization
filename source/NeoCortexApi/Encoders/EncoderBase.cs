@@ -335,10 +335,8 @@ namespace NeoCortexApi.Encoders
                 nameof(EncoderBase.IsForced),
                 nameof(EncoderBase.Offset),
             };
-            //HtmSerializer ser = new HtmSerializer();
-            //ser.SerializeBegin(obj.GetType().Name, sw);
+
             HtmSerializer.SerializeObject(obj, name, sw, ignoreMembers: excludeMembers);
-            //ser.SerializeEnd(obj.GetType().Name, sw);
         }
 
         public static object Deserialize<T>(StreamReader sr, string name)

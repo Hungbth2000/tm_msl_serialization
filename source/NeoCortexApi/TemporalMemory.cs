@@ -900,10 +900,8 @@ namespace NeoCortexApi
             {
                 //nameof(TemporalMemory.connections)
             };
-            //HtmSerializer ser = new HtmSerializer();
-            //ser.SerializeBegin(obj.GetType().Name, sw);
+
             HtmSerializer.SerializeObject(obj, name, sw, ignoreMembers);
-            //ser.SerializeEnd(obj.GetType().Name, sw);
         }
 
         public static object Deserialize<T>(StreamReader sr, string name)

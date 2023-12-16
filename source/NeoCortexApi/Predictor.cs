@@ -25,19 +25,20 @@ namespace NeoCortexApi
 
         private HtmClassifier<string, ComputeCycle> classifier { get; set; }
 
+
         /// <summary>
         /// Initializes the predictor functionality.
         /// </summary>
         /// <param name="layer">The HTM Layer.</param>
         /// <param name="connections">The HTM memory in the learned state.</param>
         /// <param name="classifier">The classifier that contains the state of learned sequences.</param>
-
         public Predictor(CortexLayer<object, object> layer, Connections connections, HtmClassifier<string, ComputeCycle> classifier)
         {
             this.connections = connections;
             this.layer = layer;
             this.classifier = classifier;
         }
+
 
         /// <summary>
         /// Starts predicting of the next subsequences.
@@ -62,6 +63,7 @@ namespace NeoCortexApi
 
             return predictedInputValues;
         }
+
 
         /// <summary>
         /// Serialize the Predictor instance
@@ -173,8 +175,8 @@ namespace NeoCortexApi
 
             predictor.layer = layer;
             return predictor;
-
         }
+
 
         /// <summary>
         /// Save Predictor (obj) model to fileName
@@ -189,10 +191,10 @@ namespace NeoCortexApi
                 using (StreamWriter sw = new StreamWriter(fileName))
                 {
                     predictor.Serialize(obj, null, sw);
-                    //predictor.Serialize(sw);
                 }
             }
         }
+
 
         /// <summary>
         /// Load Predictor model from fileName

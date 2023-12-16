@@ -18,10 +18,10 @@ namespace NeoCortexApiSample
         }
 
         /// <summary>
-        /// This example demonstrates how to learn two sequences and how to use the prediction mechanism.
-        /// First, two sequences are learned.
-        /// Second, three short sequences with first sequence containing six elements and other two sequences containing three elements each are created and used for prediction. The predictor used by experiment provides to the HTM every element of every predicting sequence.
-        /// The predictor tries to predict the next element.
+        /// In this experiment, the predictor of MultiSequenceLearning is serialized and deserialized. 
+        /// The serialized predictor need to be tested, and validated.
+        /// The prediction of both the normal predictor and the serialized predictor are checked, and found to be equal.
+        /// The results indicate that the predictor is serialized and deserialized properly. 
         /// </summary>
         private static void RunMultiSequenceSerializationExperiment()
         {
@@ -35,26 +35,30 @@ namespace NeoCortexApiSample
 
             // Prototype for building the prediction engine.
             MultiSequenceLearning experiment = new MultiSequenceLearning();
+
+            //The serializedPredictor is the predictor after serialization and deserialization.
             Predictor serializedPredictor;
+            //The predictor is the normal result of MultiSequenceLearning.
+            //The Run() method will return not only the normal predictor, but also the serializedPredictor.
             var predictor = experiment.Run(sequences, out serializedPredictor, "predictor");
 
-            // These list are used to see how the prediction works.
+            // These list are used to make prediction. 
             // Predictor is traversing the list element by element
             // By providing more elements to the prediction, the predictor delivers more precise result.
             var list1 = new double[] { 1.0, 2.0, 3.0, 4.0, 2.0, 5.0 };
             var list2 = new double[] { 2.0, 3.0, 4.0 };
             var list3 = new double[] { 8.0, 1.0, 2.0 };
 
-            // The "predictor" is the instance of class Predictor which is result after learning. The PredictNextElement() method will predict the next element.
+            //The PredictNextElement() method will predict the next element using the normal predictor and the serialized predictor.
+            //The prediction of both normal predictor and serialized predictor are checked, and compared. 
             predictor.Reset();
-            Console.WriteLine("Prediction next elements with normal predictor \n");
-            // The "predictor" instance is used as an arugment in the PredictNextElement() method means it is a normal predictor and it predicts the next element without being serialized and deserialized.
+            Console.WriteLine("\n\n\t\tPrediction next elements with normal predictor: \n\n");
+            //Prediction with normal predictor
             PredictNextElement(predictor, list2);
 
-            // The "serializedPredictor" is the instance of Predictor class which is the result after serialization and deserialization of Predictor.
             serializedPredictor.Reset();
-            Console.WriteLine("Prediction next elements with serialized predictor \n");
-            // The "serializedpredictor" instance is used as an arugment in the PredictNextElement() method, then it predict the next element after the predictor instance is being serialized and deserialized.
+            Console.WriteLine("\n\n\t\tPrediction next elements with serialized predictor: \n\n");
+            //Prediction with serialized predictor
             PredictNextElement(serializedPredictor, list2);
 
             //predictor.Reset();

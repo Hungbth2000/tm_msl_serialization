@@ -118,7 +118,6 @@ namespace NeoCortexApi.Network
         //    }
         //}
 
-
         #endregion
 
         public override bool Equals(object obj)
@@ -156,12 +155,19 @@ namespace NeoCortexApi.Network
             return this.Equals((object)other);
         }
 
+
+        /// <summary>
+        /// This method can be used to serialize an instance of class CortexLayer.
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="name"></param>
+        /// <param name="sw"></param>
+        /// <exception cref="NotImplementedException"></exception>
         public void Serialize(object obj, string name, StreamWriter sw)
         {
             // Serialize all the HtmModules in the CortexLayer
             if (obj is CortexLayer<object, object> layer)
             {
-
                 HtmSerializer ser = new HtmSerializer();
 
                 foreach (var modulePair in layer.HtmModules)
@@ -181,10 +187,10 @@ namespace NeoCortexApi.Network
                     {
                         throw new NotImplementedException();
                     }
-
                 }
             }
         }
+
 
         public static object Deserialize<T>(StreamReader sr, string name)
         {
